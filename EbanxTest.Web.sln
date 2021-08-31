@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbanxTest.Web", "EbanxTest.Web\EbanxTest.Web.csproj", "{18D00D48-6594-4EF3-B927-6F5B5D6F2484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbanxTest.Web.API", "EbanxTest.Web.API\EbanxTest.Web.API.csproj", "{B7D4CBAC-DBAC-4552-9677-BE10B2BAAD80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18D00D48-6594-4EF3-B927-6F5B5D6F2484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D00D48-6594-4EF3-B927-6F5B5D6F2484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D00D48-6594-4EF3-B927-6F5B5D6F2484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D00D48-6594-4EF3-B927-6F5B5D6F2484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D4CBAC-DBAC-4552-9677-BE10B2BAAD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D4CBAC-DBAC-4552-9677-BE10B2BAAD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D4CBAC-DBAC-4552-9677-BE10B2BAAD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D4CBAC-DBAC-4552-9677-BE10B2BAAD80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E20CB23-F3B0-479B-B58D-071133E4EC51}
+	EndGlobalSection
+EndGlobal
