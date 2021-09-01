@@ -6,3 +6,9 @@ C:\Users\joaos\Source\Repos\EbanxTest.Web\EbanxTest.Web.API\obj\Debug\netcoreapp
 C:\Users\joaos\Source\Repos\EbanxTest.Web\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\joaos\Source\Repos\EbanxTest.Web\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.RazorAssemblyInfo.cache
 C:\Users\joaos\Source\Repos\EbanxTest.Web\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.RazorAssemblyInfo.cs
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.csproj.AssemblyReference.cache
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.AssemblyInfoInputs.cache
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.AssemblyInfo.cs
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.csproj.CoreCompileInputs.cache
+C:\Users\joaos\Source\Repos\RepoEbanxTest\EbanxTest.Web.API\obj\Debug\netcoreapp3.1\EbanxTest.Web.API.MvcApplicationPartsAssemblyInfo.cache

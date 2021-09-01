@@ -10,8 +10,8 @@ namespace EbanxTest.Web.API.Models
     public class Balance
     {
         [Key]
-        private int BalanceID { get; set; }
+        public int BalanceID { get; set; }
         [Column (TypeName = "double")]
-        private double BalanceValue { get; set; }
+        public double BalanceValue { get; set; }
     }
 }
