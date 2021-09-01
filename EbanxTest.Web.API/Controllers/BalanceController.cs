@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EbanxTest.Web.API.Models;
+using EbanxTest.Web.API.Services;
 
 namespace EbanxTest.Web.API.Controllers
 {
@@ -41,64 +42,80 @@ namespace EbanxTest.Web.API.Controllers
             return balance;
         }
 
-        // PUT: api/Balances/5
+        
+        // POST: api/Balances
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBalance(int id, Balance balance)
+        [HttpPost]
+        public async Task<ActionResult<Balance>> PostBalance(string type, int destination, double amount)
         {
-            if (id != balance.BalanceID)
+            Balance balance;
+           
+            if (!BalanceExists(destination))
             {
-                return BadRequest();
+                balance = new Balance(destination, amount);
+                _context.Balance.Add(balance);
+                await _context.SaveChangesAsync();                
             }
-
-            _context.Entry(balance).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BalanceExists(id))
+                try
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    BalanceService service = new BalanceService();
+                    balance = service.ExecutaOperacao( _context.Balance.Find(destination), type, amount);
+                    _context.Entry(balance).State = EntityState.Modified;
 
-            return NoContent();
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    if (!BalanceExists(destination))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }                
+            }
+            return CreatedAtAction("GetBalance", new { id = balance.BalanceID }, balance);
         }
 
         // POST: api/Balances
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Balance>> PostBalance(Balance balance)
+        public async Task<ActionResult<Balance>> PostBalance(string type, int origin, double amount, int destination)
         {
-            _context.Balance.Add(balance);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBalance", new { id = balance.BalanceID }, balance);
-        }
-
-        // DELETE: api/Balances/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Balance>> DeleteBalance(int id)
-        {
-            var balance = await _context.Balance.FindAsync(id);
-            if (balance == null)
+            if (!BalanceExists(destination) || !BalanceExists(origin))
             {
                 return NotFound();
             }
+            else
+            {
+                try
+                {
+                    BalanceService service = new BalanceService();
+                    List<Balance> balance = service.Transferencia(_context.Balance.Find(origin), _context.Balance.Find(destination), amount);
+                    _context.Entry(balance).State = EntityState.Modified;
 
-            _context.Balance.Remove(balance);
-            await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    if (!BalanceExists(destination))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
 
-            return balance;
+            return NoContent();
         }
 
         private bool BalanceExists(int id)

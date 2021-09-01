@@ -50,6 +50,7 @@ namespace EbanxTest.Web.API
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

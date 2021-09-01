@@ -9,6 +9,12 @@ namespace EbanxTest.Web.API.Models
 {
     public class Balance
     {
+        public Balance (int balanceID, double balanceValue)
+        {
+            BalanceID = balanceID;
+            BalanceValue = balanceValue;
+        }
+        
         [Key]
         public int BalanceID { get; set; }
         [Column (TypeName = "double")]
