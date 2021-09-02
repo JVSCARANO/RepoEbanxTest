@@ -34,7 +34,7 @@ namespace EbanxTest.Web.API.Services
         {
             List<Balance> balance = new List<Balance>();
             balance.Add(Deposito(contaDestino, valor));
-            balance.Add(Retirada(contaDestino, valor));
+            balance.Add(Retirada(contaOrigem, valor));
 
             return balance;
         }

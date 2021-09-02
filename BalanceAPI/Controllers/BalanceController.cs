@@ -14,7 +14,7 @@ namespace BalanceAPI.Controllers
     [Route("[controller]")]
     public class BalanceController : ControllerBase
     {
-        private readonly BalanceContext _context;
+        private BalanceContext _context;
 
         public BalanceController(BalanceContext context)
         {
@@ -29,7 +29,7 @@ namespace BalanceAPI.Controllers
         }
 
         // GET: api/Balance/5
-        [HttpGet("account_id={id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Balance>> GetBalance(int id)
         {
             var balance = await _context.Balance.FindAsync(id);
@@ -42,55 +42,67 @@ namespace BalanceAPI.Controllers
             return balance;
         }
 
-       
-
-        
-        // POST: api/Balances
-        [HttpPost]
-        public async Task<ActionResult<Balance>> PostBalance(string type, int destination, double amount)
+        [HttpPost("reset")]
+        public async Task<ActionResult<Balance>> PostBalance()
         {
-            Balance balance;
+            foreach (Balance b in _context.Balance)
+            {
+                _context.Entry(b).State = EntityState.Deleted;
+            }
+
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+            // POST: api/Balances
+        [HttpPost]
+        public async Task<ActionResult<Balance>> PostBalance(string type, int origin, int destination, double amount)
+        {
+            Balance balanceDest;
+            Balance balanceOri;
             BalanceService balanceService = new BalanceService();
            
             if (balanceService.Criar(destination,_context,type))
             {
-                balance = new Balance(destination, amount);
-                _context.Balance.Add(balance);
+                balanceDest = new Balance(destination, amount);
+                _context.Balance.Add(balanceDest);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetBalance", new { id = balance.BalanceID }, balance);
+                return CreatedAtAction("GetBalance", new { id = balanceDest.BalanceID }, balanceDest);
             }
             if (balanceService.Atualizar(destination, _context, type))
             {
-                    balance = balanceService.ExecutaAtualizacao(_context.Balance.Find(destination), type, amount);
-                    _context.Entry(balance).State = EntityState.Modified;
+                balanceDest = balanceService.ExecutaAtualizacao(_context.Balance.Find(destination), type, amount);
+                    _context.Entry(balanceDest).State = EntityState.Modified;
 
                     await _context.SaveChangesAsync();
-                return CreatedAtAction("GetBalance", new { id = balance.BalanceID }, balance);
+                return CreatedAtAction("GetBalance", new { id = balanceDest.BalanceID }, balanceDest);
             }
-
-            return NotFound();
-
-        }
-
-        // POST: api/Balances
-        [HttpPost]
-        public async Task<ActionResult<Balance>> PostBalance(string type, int origin, double amount, int destination)
-        {
-            BalanceService service = new BalanceService();
-            if (service.Transferir(origin,destination,type,_context ))
+            if (balanceService.Transferir(origin, destination, type, _context))
             {
-                List<Balance> balance = service.Transferencia(_context.Balance.Find(origin), _context.Balance.Find(destination), amount);
-                _context.Entry(balance).State = EntityState.Modified;
 
+                balanceDest = _context.Balance.Find(destination);
+                balanceOri = _context.Balance.Find(origin);
+
+
+                List<Balance> balanceList =  balanceService.Transferencia(balanceOri, balanceDest, amount);
+
+                foreach (Balance b in balanceList)
+                {
+                    _context.Entry(b).State = EntityState.Modified;
+                }
+                
+                
                 await _context.SaveChangesAsync();
                 return NoContent();
-               
-            }
-            return NotFound();
 
+            }
+
+            return NotFound();
 
         }
 
+   
        
     }
 }

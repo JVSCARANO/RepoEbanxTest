@@ -10,7 +10,7 @@ namespace BalanceAPI.Services
     {
         private static readonly string[] Types = new[]
        {
-            "withdraw", "deposito", "transfer"
+            "withdraw", "deposit", "transfer"
         };
 
         public Balance ExecutaAtualizacao( Balance balance,string tipoOperacao, double valorOperacao)
@@ -36,11 +36,11 @@ namespace BalanceAPI.Services
 
         public List<Balance> Transferencia ( Balance contaOrigem, Balance contaDestino, double valor)
         {
-            List<Balance> balance = new List<Balance>();
-            balance.Add(Deposito(contaDestino, valor));
-            balance.Add(Retirada(contaDestino, valor));
+            List<Balance> balanceList = new List<Balance>();
+            balanceList.Add(Deposito(contaDestino, valor));
+            balanceList.Add(Retirada(contaOrigem, valor));
 
-            return balance;
+            return balanceList;
         }
 
         private bool BalanceExists(int id, BalanceContext context)
@@ -50,17 +50,17 @@ namespace BalanceAPI.Services
 
         public bool Atualizar(int id, BalanceContext context, string type)
         {
-            return BalanceExists(id, context) && type != Types[3].ToString();
+            return BalanceExists(id, context) && type != Types[2].ToString() && id != 0;
         }
 
         public bool Criar(int id, BalanceContext context,string type)
         {
-            return !BalanceExists(id, context ) && type == Types[1].ToString();
+            return !BalanceExists(id, context ) && type == Types[1].ToString() && id != 0;
         }
 
         public bool Transferir(int origin, int destination, string type, BalanceContext context)
         {
-            return BalanceExists(destination,context) && BalanceExists(origin,context) && type == Types[2].ToString();
+            return BalanceExists(destination,context) && BalanceExists(origin,context) && type == Types[2].ToString() && origin !=0 && destination != 0;
                 
         }
     }
